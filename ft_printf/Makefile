@@ -3,36 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vvarodi <vvarodi@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: humartin <humartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/08/13 22:15:55 by vvarodi           #+#    #+#              #
-#    Updated: 2020/08/19 00:33:26 by vvarodi          ###   ########.fr        #
+#    Created: 2022/07/11 13:20:33 by humartin          #+#    #+#              #
+#    Updated: 2022/07/11 13:20:40 by humartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror
 
-CC = gcc
+NAME := libftprintf.a
 
-CFLAGS = -Wall -Wextra -Werror
+SRCS := ft_unsignedorint.c ft_ptrcharstrhexa.c ft_printf.c ft_itoa.c ft_putchar_fd.c \
+		ft_putstr_fd.c ft_strlen.c \
 
-SRCS	= ft_printf.c read_format.c ft_printf_utils.c ft_buffer.c ft_numbers.c \
-		type_s.c type_c.c type_di.c type_u.c type_x.c type_p.c
+OBJS = $(SRCS:.c=.o)
 
-OBJS	= ${SRCS:.c=.o}
+all: $(NAME)
 
-NAME	= libftprintf.a
+$(NAME): $(OBJS)
+	ar -rcs $(NAME) $(OBJS)
 
-$(NAME) : ${OBJS}
-	ar rcs ${NAME} ${OBJS} 
+clean:
+	rm -f $(NAME) $(OBJS)
 
-all : ${NAME}
+fclean:
+	rm -f $(NAME) $(OBJS)
 
-debug:
-	$(CC) -g -o ft_printf $(SRCS) 
-clean :
-	rm -f ${OBJS}
+re: fclean all
 
-fclean : clean
-	rm -f ${NAME}
-
-re : fclean all
+.PHONY: all clean fclean re
